@@ -175,6 +175,7 @@ import org.sonar.server.plugins.ws.PluginWSCommons;
 import org.sonar.server.plugins.ws.PluginsWs;
 import org.sonar.server.plugins.ws.UninstallAction;
 import org.sonar.server.plugins.ws.UpdatesAction;
+import org.sonar.server.project.es.ProjectIndexDefinition;
 import org.sonar.server.project.ws.ProjectsWsModule;
 import org.sonar.server.projectlink.ws.ProjectLinksModule;
 import org.sonar.server.property.InternalPropertiesImpl;
@@ -447,6 +448,9 @@ public class PlatformLevel4 extends PlatformLevel {
       ViewIndexDefinition.class,
       ViewIndexer.class,
       ViewIndex.class,
+
+      // projects
+      ProjectIndexDefinition.class,
 
       // issues
       IssueIndexDefinition.class,
