@@ -44,11 +44,11 @@ public class ProjectMeasuresIndexer extends BaseIndexer {
 
   @Override
   protected long doIndex(long lastUpdatedAt) {
-    return doIndex(createBulkIndexer(false), (String) null);
+    return doIndex(createBulkIndexer(false), lastUpdatedAt, null);
   }
 
   public void index(String projectUuid) {
-    index(lastUpdatedAt -> doIndex(createBulkIndexer(false), projectUuid));
+    doIndex(createBulkIndexer(false), 0L, projectUuid);
   }
 
   public void deleteProject(String uuid) {
@@ -59,10 +59,10 @@ public class ProjectMeasuresIndexer extends BaseIndexer {
       .get();
   }
 
-  private long doIndex(BulkIndexer bulk, @Nullable String projectUuid) {
+  private long doIndex(BulkIndexer bulk, long lastUpdatedAt, @Nullable String projectUuid) {
     DbSession dbSession = dbClient.openSession(false);
     try {
-      ProjectMeasuresResultSetIterator rowIt = ProjectMeasuresResultSetIterator.create(dbClient, dbSession, projectUuid);
+      ProjectMeasuresResultSetIterator rowIt = ProjectMeasuresResultSetIterator.create(dbClient, dbSession, lastUpdatedAt, projectUuid);
       doIndex(bulk, rowIt);
       rowIt.close();
       return 0L;
